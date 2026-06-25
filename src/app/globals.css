@@ -15,8 +15,8 @@
   .btn-sm     { @apply px-3 py-1.5 text-xs; }
   .btn-lg     { @apply px-6 py-3 text-base; }
 
-  .card       { @apply bg-gray-900 border border-white/8 rounded-2xl p-6; }
-  .card-sm    { @apply bg-gray-900 border border-white/8 rounded-xl p-4; }
+  .card       { @apply bg-gray-900 border border-white/10 rounded-2xl p-6; }
+  .card-sm    { @apply bg-gray-900 border border-white/10 rounded-xl p-4; }
 
   .input      { @apply w-full bg-gray-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-500 outline-none focus:border-brand/60 transition-colors; }
   .label      { @apply block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5; }
