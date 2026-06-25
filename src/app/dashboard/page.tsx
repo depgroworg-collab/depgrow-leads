@@ -1,4 +1,4 @@
-import { createServerActionClient } from '@/lib/supabase'
+import { createServerActionClient } from '@/lib/supabase.server'
 import Link from 'next/link'
 import { formatDate } from '@/lib/utils'
 import type { Lead } from '@/types'

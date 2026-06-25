@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { createServerActionClient } from '@/lib/supabase'
+import { createServerActionClient } from '@/lib/supabase.server'
 import DashSidebar from '@/components/dashboard/Sidebar'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {

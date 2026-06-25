@@ -1,4 +1,4 @@
-import { createServerActionClient } from '@/lib/supabase'
+import { createServerActionClient } from '@/lib/supabase.server'
 import FormBuilder from '@/components/dashboard/FormBuilder'
 
 export default async function FormPage() {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient } from '@/lib/supabase.server'
 
 const CORS = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60' }
 

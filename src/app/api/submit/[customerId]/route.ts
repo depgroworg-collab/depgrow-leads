@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase'
+import { createServiceClient } from '@/lib/supabase.server'
 import { scoreLead } from '@/lib/scoring'
 import { sendWhatsAppNotification } from '@/lib/whatsapp'
 import { detectDevice } from '@/lib/utils'

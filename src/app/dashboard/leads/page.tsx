@@ -1,4 +1,4 @@
-import { createServerActionClient } from '@/lib/supabase'
+import { createServerActionClient } from '@/lib/supabase.server'
 import LeadsTable from '@/components/dashboard/LeadsTable'
 import type { Lead } from '@/types'
 

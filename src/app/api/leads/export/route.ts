@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerActionClient } from '@/lib/supabase'
+import { createServerActionClient } from '@/lib/supabase.server'
 import { leadsToCSV } from '@/lib/utils'
 import type { Lead } from '@/types'
 
