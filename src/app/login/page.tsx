@@ -4,6 +4,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
+const DepgrowLogo = () => (
+  <svg width="32" height="32" viewBox="0 0 22 22" fill="none">
+    <path d="M4 16 C4 16 7 6 11 6 C15 6 18 16 18 16" stroke="#0E7A5A" strokeWidth="1.8" strokeLinecap="round"/>
+    <path d="M8 11 C8 11 9.5 14 11 14 C12.5 14 14 11 14 11" stroke="#16A97D" strokeWidth="1.8" strokeLinecap="round"/>
+    <circle cx="11" cy="6" r="2" fill="#0E7A5A"/>
+  </svg>
+)
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail]       = useState('')
@@ -20,12 +28,25 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-radial-brand">
-      <div className="w-full max-w-sm card animate-fade-in">
-        <div className="text-xl font-extrabold mb-6"><span className="text-brand">Dep</span>grow Leads</div>
-        <h1 className="text-2xl font-bold mb-1">Welcome back</h1>
-        <p className="text-sm text-gray-500 mb-6">Sign in to your dashboard</p>
-        <form onSubmit={submit} className="flex flex-col gap-4">
+    <div className="auth-wrap">
+      <div className="auth-card card">
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.75rem' }}>
+          <DepgrowLogo />
+          <div>
+            <div style={{ fontSize: 19, fontWeight: 800, lineHeight: 1.1 }}>
+              <span style={{ color: 'var(--green)' }}>Dep</span>
+              <span style={{ color: 'var(--green-light)' }}>grow</span>
+              <span style={{ color: 'var(--text-dim)', fontSize: 13, fontWeight: 500, marginLeft: 6 }}>Leads</span>
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 1 }}>Smart Lead Capture SaaS</div>
+          </div>
+        </div>
+
+        <h1>Welcome back</h1>
+        <p>Sign in to your dashboard</p>
+
+        <form className="auth-form" onSubmit={submit}>
           <div className="field">
             <label className="label">Email</label>
             <input className="input" type="email" placeholder="you@company.com" value={email} onChange={e => setEmail(e.target.value)} required />
@@ -34,12 +55,21 @@ export default function LoginPage() {
             <label className="label">Password</label>
             <input className="input" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
-          {error && <p className="text-red-400 text-xs">⚠ {error}</p>}
-          <button className="btn btn-brand w-full justify-center" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign in →'}
+          {error && <p className="error-msg">⚠ {error}</p>}
+          <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', padding: '12px' }}>
+            {loading ? <><span className="spinner" /> Signing in…</> : 'Sign in →'}
           </button>
         </form>
-        <p className="text-center text-sm text-gray-500 mt-5">No account? <Link href="/register" className="text-brand font-semibold">Create one free</Link></p>
+
+        <div className="auth-footer">
+          No account? <Link href="/register">Get started — ₹14,999</Link>
+        </div>
+
+        <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid var(--border)', textAlign: 'center' }}>
+          <Link href="https://depgrow.in" style={{ fontSize: 12, color: 'var(--text-dim)', textDecoration: 'none' }}>
+            ← Back to depgrow.in
+          </Link>
+        </div>
       </div>
     </div>
   )
