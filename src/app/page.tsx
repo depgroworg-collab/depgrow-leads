@@ -70,7 +70,7 @@ export default function LandingPage() {
       {/* Scoring visual */}
       <div style={{ maxWidth: 700, margin: '0 auto 5rem', padding: '0 2rem' }}>
         <div style={{ background: 'rgba(14,122,90,0.08)', border: '1px solid rgba(14,122,90,0.25)', borderRadius: 16, padding: '2rem' }}>
-          <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 1.25, textAlign: 'center', marginBottom: 20 }}>Lead Scoring Logic</h3>
+          <h3 style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 20 }}>Lead Scoring Logic</h3>
           {[
             { seg: '🔥 Hot',  color: '#EF4444', bg: 'rgba(239,68,68,0.1)',  border: 'rgba(239,68,68,0.3)',  rule: 'Budget ≥ ₹50,000 AND Urgency = "This week"' },
             { seg: '🌤 Warm', color: '#F59E0B', bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.3)', rule: 'Budget ₹20k–₹50k OR Urgency = "This month"' },
