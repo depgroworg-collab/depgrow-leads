@@ -117,9 +117,9 @@ function Hero() {
         <div>
           <div className="hero2-eyebrow"><span className="dot"/>SMART LEAD CAPTURE SAAS</div>
           <h1 className="hero2-h1">
-            Capture leads. <span className="leak">LEADS/span> in 60 seconds
+            Capture leads. <span className="leak">Score them</span> in 60 seconds
           </h1>
-          <p className="hero2-sub">A multi-step form that qualifies every lead as Hot, Warm, or Cold � and pings you on WhatsApp the moment someone submits.</p>
+          <p className="hero2-sub">A multi-step form that qualifies every lead as Hot, Warm, or Cold — and pings you on WhatsApp the moment someone submits.</p>
           <div className="hero2-actions">
             <Link href="/register" className="hero2-btn-p">🚀 Get started free</Link>
             <Link href="/login" className="hero2-btn-s">Sign in →</Link>
@@ -149,10 +149,10 @@ function Hero() {
               <div className="hub2-ring r1"/><div className="hub2-ring r2"/><div className="hub2-ring r3"/>
               <div className="hub2-core">
                 <h2>YOUR<span>Leads</span></h2>
-                <p>LEADS</p>
+                <p>SYSTEM</p>
               </div>
             </div>
-            <div className="chip2">EMBED. <span>TRACK. GROW.</span></div>
+            <div className="chip2">CAPTURE. <span>SCORE. CLOSE.</span></div>
             {nodes.map(n=>(
               <div key={n.cls} className={`node2 node2-float ${n.cls}`} style={{animationDelay:n.delay}}>
                 <div className="node2-circle">
@@ -177,7 +177,7 @@ function Hero() {
   )
 }
 
-const tickerItems = ['WhatsApp Leads','Click Analytics','Domain Whitelisting','Live Preview','Multi-Leads','60s Setup','Zero Conflicts','Embed Anywhere']
+const tickerItems = ['WhatsApp Alerts','Lead Scoring','Domain Whitelisting','Live Preview','Multi-Step Forms','60s Setup','Zero Conflicts','Embed Anywhere']
 const tickerIcons = ['ti-brand-whatsapp','ti-chart-bar','ti-lock','ti-eye','ti-layout-grid','ti-bolt','ti-shield-check','ti-code']
 
 const clients = [
@@ -191,19 +191,19 @@ const clients = [
 ]
 
 const features = [
-  {icon:'ti-bolt',title:'60-second setup',desc:'Paste one script tag into your website. The button appears instantly — no React, no build step, no dependencies.'},
-  {icon:'ti-palette',title:'Live preview builder',desc:'Choose position, colors, button size, tooltip text, and pre-filled message. Preview changes live before publishing.'},
-  {icon:'ti-chart-bar',title:'Full click analytics',desc:'Track every click with country, device, and daily breakdowns. Know exactly where your WhatsApp leads come from.'},
-  {icon:'ti-lock',title:'Domain whitelisting',desc:'Lock each Leads to specific domains. Your embed code only works where you intend it to.'},
-  {icon:'ti-world',title:'Works everywhere',desc:'Zero-conflict isolated styles. Works on WordPress, Webflow, Wix, Shopify, plain HTML — LEADS'},
-  {icon:'ti-infinity',title:'Unlimited Leadss',desc:'Create separate Leadss for each client or brand. Different numbers, messages, and designs — all in one dashboard.'},
+  {icon:'ti-bolt',title:'60-second setup',desc:'Paste one script tag into your website. The form appears instantly — no React, no build step, no dependencies.'},
+  {icon:'ti-palette',title:'Live preview builder',desc:'Choose fields, colors, steps, and the WhatsApp alert message. Preview changes live before publishing.'},
+  {icon:'ti-chart-bar',title:'Full lead analytics',desc:'Track every submission with source, device, and daily breakdowns. Know exactly where your leads come from.'},
+  {icon:'ti-lock',title:'Domain whitelisting',desc:'Lock each form to specific domains. Your embed code only works where you intend it to.'},
+  {icon:'ti-world',title:'Works everywhere',desc:'Zero-conflict isolated styles. Works on WordPress, Webflow, Wix, Shopify, and plain HTML.'},
+  {icon:'ti-infinity',title:'Unlimited forms',desc:'Create separate forms for each client or brand. Different fields, scoring, and designs — all in one dashboard.'},
 ]
 
 const process = [
   {num:'01',title:'Create account',desc:'Sign up free and access your dashboard instantly.'},
-  {num:'02',title:'Create Leads',desc:'Set your WhatsApp number, message, colors, and position.'},
-  {num:'03',title:'Copy embed code',desc:'One script tag — paste it before </body> on LEADS'},
-  {num:'04',title:'Track & optimise',desc:'See clicks by country, device, and day. Know what works.'},
+  {num:'02',title:'Build your form',desc:'Set your fields, scoring rules, colors, and WhatsApp number.'},
+  {num:'03',title:'Copy embed code',desc:'One script tag — paste it before </body> on your site.'},
+  {num:'04',title:'Track & optimise',desc:'See submissions by source, device, and day. Know what works.'},
 ]
 
 export default function LandingPage() {
@@ -242,7 +242,7 @@ export default function LandingPage() {
       {/* Features */}
       <div className="section" style={{marginTop:'5rem'}}>
         <p className="sec-label">Features</p>
-        <h2 className="sec-h">Everything you need to capture WhatsApp leads.</h2>
+        <h2 className="sec-h">Everything you need to capture and qualify leads.</h2>
         <p className="sec-sub">Built for agencies and businesses who want results, not complexity.</p>
         <div className="leak-grid">
           {features.map((f,i)=>(
@@ -262,7 +262,7 @@ export default function LandingPage() {
             {val:'60s',label:'Setup time'},
             {val:'∞',label:'Websites supported'},
             {val:'100%',label:'CSS conflict free'},
-            {val:'24/7',label:'Leads uptime'},
+            {val:'24/7',label:'Form uptime'},
           ].map(m=>(
             <div key={m.label} className="metric">
               <div className="metric-val">{m.val}</div>
@@ -276,7 +276,7 @@ export default function LandingPage() {
       <div className="section">
         <p className="sec-label">How it works</p>
         <h2 className="sec-h">Live in 60 seconds. No developer needed.</h2>
-        <p className="sec-sub">Four simple steps from signup to live Leads.</p>
+        <p className="sec-sub">Four simple steps from signup to a live lead capture form.</p>
         <div className="proc-steps">
           {process.map(p=>(
             <div key={p.num} className="proc-step">
@@ -291,13 +291,13 @@ export default function LandingPage() {
       {/* Why section */}
       <div className="section">
         <p className="sec-label">Why Depgrow Leads</p>
-        <h2 className="sec-h">Not just a button. A revenue tool.</h2>
-        <p className="sec-sub">Most WhatsApp buttons are static. Ours tracks, customises, and scales.</p>
+        <h2 className="sec-h">Not just a form. A revenue tool.</h2>
+        <p className="sec-sub">Most lead forms just collect data. Ours scores, alerts, and converts.</p>
         <div className="why-grid">
           {[
-            {icon:'ti-bolt',title:'Instant response',desc:'WhatsApp opens immediately — no forms, no friction. Visitors connect in one click.'},
-            {icon:'ti-chart-bar',title:'Full analytics',desc:'Track every click with country, device, and daily data. Know exactly what drives contacts.'},
-            {icon:'ti-palette',title:'Live preview builder',desc:'Customise colors, position, size, and message — see changes instantly before publishing.'},
+            {icon:'ti-bolt',title:'Instant alerts',desc:'WhatsApp pings the moment someone submits — no forms sitting unread, no delayed follow-ups.'},
+            {icon:'ti-chart-bar',title:'Full analytics',desc:'Track every submission with source, device, and daily data. Know exactly what drives leads.'},
+            {icon:'ti-palette',title:'Live preview builder',desc:'Customise fields, colors, steps, and scoring — see changes instantly before publishing.'},
             {icon:'ti-shield-check',title:'Domain locked',desc:'Your embed code only works on your whitelisted domains — no unauthorised usage.'},
           ].map(w=>(
             <div key={w.title} className="why-card">
@@ -314,13 +314,13 @@ export default function LandingPage() {
         <div className="guarantee-inner">
           <div className="guarantee-badge">⚡</div>
           <h2>Live in 60 seconds. Guaranteed.</h2>
-          <p>If you can paste a script tag, you can embed a Depgrow WhatsApp Leads. Works on LEADS any platform, any CMS.</p>
+          <p>If you can paste a script tag, you can embed a Depgrow lead capture form. Works on any platform, any CMS.</p>
         </div>
       </div>
 
       {/* CTA */}
       <div className="cta-band">
-        <h2>Ready to add WhatsApp to your website?</h2>
+        <h2>Ready to start capturing qualified leads?</h2>
         <p>Free to start. One line of code. Full analytics. No developer needed.</p>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
           <Link href="/register" className="btn-white">🚀 Get started free</Link>
@@ -336,7 +336,7 @@ export default function LandingPage() {
         <div className="footer-grid">
           <div>
             <div className="footer-brand"><Logo/><span style={{color:'#fff'}}><span style={{color:'#1aff9c'}}>Dep</span><span style={{color:'#3fd0ff'}}>grow</span> Leads</span></div>
-            <p className="footer-tagline">WhatsApp chat Leadss with full analytics — built for Depgrow clients and beyond.</p>
+            <p className="footer-tagline">Multi-step lead capture forms with full analytics — built for Depgrow clients and beyond.</p>
             <div className="footer-social">
               <a href="https://www.instagram.com/depgrow" target="_blank" rel="noopener noreferrer"><i className="ti ti-brand-instagram"/></a>
               <a href="https://www.linkedin.com/in/valluri-satyannarayana-247463418" target="_blank" rel="noopener noreferrer"><i className="ti ti-brand-linkedin"/></a>
@@ -347,7 +347,7 @@ export default function LandingPage() {
             <div className="footer-col-title">Product</div>
             <ul className="footer-col-links">
               <li><Link href="/dashboard">Dashboard</Link></li>
-              <li><Link href="/register">Create Leads</Link></li>
+              <li><Link href="/register">Create form</Link></li>
               <li><Link href="/login">Sign in</Link></li>
             </ul>
           </div>
