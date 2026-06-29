@@ -1,120 +1,130 @@
-'use client'
+﻿'use client'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
-declare global { interface Window { Razorpay: any } }
+const Logo = () => (
+  <svg width="28" height="28" viewBox="0 0 22 22" fill="none">
+    <path d="M4 16 C4 16 7 6 11 6 C15 6 18 16 18 16" stroke="#0E7A5A" strokeWidth="1.8" strokeLinecap="round"/>
+    <path d="M8 11 C8 11 9.5 14 11 14 C12.5 14 14 11 14 11" stroke="#16A97D" strokeWidth="1.8" strokeLinecap="round"/>
+    <circle cx="11" cy="6" r="2" fill="#0E7A5A"/>
+  </svg>
+)
 
 export default function RegisterPage() {
   const router = useRouter()
-  const [step, setStep]         = useState<'details' | 'payment'>('details')
-  const [name, setName]         = useState('')
+  const [step, setStep] = useState<'details'|'payment'>('details')
+  const [name, setName] = useState('')
   const [business, setBusiness] = useState('')
-  const [email, setEmail]       = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [error, setError]       = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string|null>(null)
 
   async function handleDetails(e: React.FormEvent) {
     e.preventDefault()
     if (password.length < 8) { setError('Password must be at least 8 characters.'); return }
-    setError(null)
-    setStep('payment')
+    setError(null); setStep('payment')
   }
 
   async function handlePayment() {
     setLoading(true); setError(null)
     try {
-      // 1. Create Razorpay order
-      const orderRes = await fetch('/api/razorpay/order', { method: 'POST' })
-      const { orderId, amount, currency } = await orderRes.json()
-
-      // 2. Load Razorpay script
-      await new Promise<void>((res, rej) => {
-        if (window.Razorpay) return res()
-        const s = document.createElement('script')
-        s.src = 'https://checkout.razorpay.com/v1/checkout.js'
-        s.onload = () => res(); s.onerror = rej
-        document.head.appendChild(s)
-      })
-
-      // 3. Open checkout
-      await new Promise<void>((resolve, reject) => {
-        const rz = new window.Razorpay({
-          key:         process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          amount, currency,
-          order_id:    orderId,
-          name:        'Depgrow Leads',
-          description: 'Smart Lead Capture — One-time licence',
-          prefill:     { name, email },
-          theme:       { color: '#7C3AED' },
-          handler: async (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
-            // 4. Verify payment
-            const vRes = await fetch('/api/razorpay/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(response),
-            })
-            if (!vRes.ok) { reject(new Error('Payment verification failed')); return }
-            resolve()
-          },
-          modal: { ondismiss: () => reject(new Error('Payment cancelled')) },
-        })
-        rz.open()
-      })
-
-      // 5. Create Supabase account
-      const { error: authErr } = await createClient().auth.signUp({
+      const { error: err } = await createClient().auth.signUp({
         email, password,
         options: { data: { name, business_name: business } },
       })
-      if (authErr) throw authErr
-
+      if (err) throw err
       router.push('/dashboard')
     } catch (e: any) {
-      setError(e.message || 'Payment failed. Please try again.')
+      setError(e.message || 'Something went wrong.')
       setLoading(false)
     }
   }
 
+  const inputStyle: React.CSSProperties = {
+    width:'100%', border:'none', outline:'none',
+    padding:'12px 14px', fontSize:14, color:'#111827',
+    borderRadius:10, background:'transparent',
+    fontFamily:'inherit', boxSizing:'border-box'
+  }
+  const wrapStyle = (focused=false): React.CSSProperties => ({
+    border:`1.5px solid ${focused?'#0E7A5A':'#E5E7EB'}`,
+    borderRadius:10, background:'#fff'
+  })
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-sm card animate-fade-in">
-        <div className="text-xl font-extrabold mb-6"><span className="text-brand">Dep</span>grow Leads</div>
+    <div style={{minHeight:'100vh',background:'#f9fafb',display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',fontFamily:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'}}>
+      <div style={{width:'100%',maxWidth:480,background:'#fff',borderRadius:20,padding:'2.5rem',boxShadow:'0 4px 32px rgba(0,0,0,0.08)',border:'1px solid #E5E7EB'}}>
+
+        {/* Logo */}
+        <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:'2rem'}}>
+          <Logo />
+          <span style={{fontSize:20,fontWeight:800}}>
+            <span style={{color:'#0E7A5A'}}>Dep</span><span style={{color:'#16A97D'}}>grow</span>
+            <span style={{fontSize:13,fontWeight:500,color:'#9CA3AF',marginLeft:6}}>Leads</span>
+          </span>
+        </div>
 
         {step === 'details' ? (
           <>
-            <h1 className="text-2xl font-bold mb-1">Create account</h1>
-            <p className="text-sm text-gray-500 mb-6">₹14,999 one-time · Unlimited leads</p>
-            <form onSubmit={handleDetails} className="flex flex-col gap-4">
-              <div className="field"><label className="label">Your name</label><input className="input" placeholder="Full name" value={name} onChange={e=>setName(e.target.value)} required /></div>
-              <div className="field"><label className="label">Business name</label><input className="input" placeholder="Your company" value={business} onChange={e=>setBusiness(e.target.value)} required /></div>
-              <div className="field"><label className="label">Email</label><input className="input" type="email" placeholder="you@company.com" value={email} onChange={e=>setEmail(e.target.value)} required /></div>
-              <div className="field"><label className="label">Password</label><input className="input" type="password" placeholder="Min 8 characters" value={password} onChange={e=>setPassword(e.target.value)} required /></div>
-              {error && <p className="text-red-400 text-xs">⚠ {error}</p>}
-              <button className="btn btn-brand w-full justify-center" type="submit">Continue to payment →</button>
+            <h1 style={{fontSize:26,fontWeight:800,color:'#111827',marginBottom:6}}>Create account</h1>
+            <p style={{fontSize:14,color:'#6B7280',marginBottom:'2rem'}}>₹14,999 one-time · Unlimited leads</p>
+            {error && <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'10px 14px',fontSize:13,color:'#DC2626',marginBottom:'1rem'}}>⚠ {error}</div>}
+            <form onSubmit={handleDetails} style={{display:'flex',flexDirection:'column',gap:'1.25rem'}}>
+              {[
+                {label:'Your name',type:'text',val:name,set:setName,ph:'Full name'},
+                {label:'Business name',type:'text',val:business,set:setBusiness,ph:'Your company'},
+                {label:'Email address',type:'email',val:email,set:setEmail,ph:'you@company.com'},
+                {label:'Password',type:'password',val:password,set:setPassword,ph:'Min 8 characters'},
+              ].map(f => (
+                <div key={f.label}>
+                  <label style={{display:'block',fontSize:13,fontWeight:600,color:'#374151',marginBottom:6}}>{f.label} *</label>
+                  <div style={wrapStyle()}>
+                    <input type={f.type} placeholder={f.ph} value={f.val} onChange={e=>f.set(e.target.value)} required style={inputStyle}
+                      onFocus={e=>(e.target.parentElement!.style.borderColor='#0E7A5A')}
+                      onBlur={e=>(e.target.parentElement!.style.borderColor='#E5E7EB')}
+                    />
+                  </div>
+                </div>
+              ))}
+              <button type="submit" style={{width:'100%',padding:'14px',background:'linear-gradient(100deg,#0E7A5A,#16A97D)',color:'#fff',border:'none',borderRadius:12,fontSize:15,fontWeight:700,cursor:'pointer',fontFamily:'inherit',boxShadow:'0 8px 24px rgba(14,122,90,0.25)',marginTop:4}}>
+                Continue to payment →
+              </button>
             </form>
           </>
         ) : (
           <>
-            <h1 className="text-2xl font-bold mb-1">One last step</h1>
-            <p className="text-sm text-gray-500 mb-6">Complete payment to activate your account.</p>
-            <div className="bg-gray-800 rounded-xl p-4 mb-6">
-              <div className="flex justify-between items-center">
-                <div><div className="font-semibold">Depgrow Leads — Lifetime Access</div><div className="text-xs text-gray-500 mt-0.5">Unlimited leads · WhatsApp alerts · Lead CRM</div></div>
-                <div className="text-xl font-bold text-brand">₹14,999</div>
+            <h1 style={{fontSize:26,fontWeight:800,color:'#111827',marginBottom:6}}>One last step</h1>
+            <p style={{fontSize:14,color:'#6B7280',marginBottom:'1.5rem'}}>Complete payment to activate your account.</p>
+            <div style={{background:'#F0FDF7',border:'1px solid #D6F4EC',borderRadius:14,padding:'1.25rem',marginBottom:'1.5rem'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <div>
+                  <div style={{fontWeight:700,fontSize:15,color:'#111827'}}>Depgrow Leads — Lifetime Access</div>
+                  <div style={{fontSize:12,color:'#6B7280',marginTop:3}}>Unlimited leads · WhatsApp alerts · Lead CRM</div>
+                </div>
+                <div style={{fontSize:22,fontWeight:800,color:'#0E7A5A'}}>₹14,999</div>
               </div>
             </div>
-            {error && <p className="text-red-400 text-xs mb-4">⚠ {error}</p>}
-            <button className="btn btn-brand w-full justify-center btn-lg" onClick={handlePayment} disabled={loading}>
-              {loading ? 'Processing…' : '🔒 Pay ₹14,999 & Activate'}
+            {error && <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'10px 14px',fontSize:13,color:'#DC2626',marginBottom:'1rem'}}>⚠ {error}</div>}
+            <button onClick={handlePayment} disabled={loading}
+              style={{width:'100%',padding:'14px',background:'linear-gradient(100deg,#0E7A5A,#16A97D)',color:'#fff',border:'none',borderRadius:12,fontSize:15,fontWeight:700,cursor:loading?'not-allowed':'pointer',opacity:loading?0.7:1,fontFamily:'inherit',boxShadow:'0 8px 24px rgba(14,122,90,0.25)',marginBottom:10}}>
+              {loading ? '⏳ Processing…' : '🔒 Pay ₹14,999 & Activate'}
             </button>
-            <button className="btn btn-ghost w-full justify-center mt-2 text-xs" onClick={() => setStep('details')}>← Back</button>
-            <p className="text-center text-xs text-gray-600 mt-3">Secured by Razorpay</p>
+            <button onClick={()=>setStep('details')} style={{width:'100%',padding:'10px',background:'transparent',border:'1px solid #E5E7EB',borderRadius:10,fontSize:13,color:'#6B7280',cursor:'pointer',fontFamily:'inherit'}}>
+              ← Back
+            </button>
+            <p style={{textAlign:'center',fontSize:12,color:'#9CA3AF',marginTop:10}}>Secured by Razorpay</p>
           </>
         )}
-        <p className="text-center text-sm text-gray-500 mt-5">Already have an account? <Link href="/login" className="text-brand font-semibold">Sign in</Link></p>
+
+        <p style={{textAlign:'center',fontSize:13,color:'#6B7280',marginTop:'1.5rem'}}>
+          Already have an account? <Link href="/login" style={{color:'#0E7A5A',fontWeight:600,textDecoration:'none'}}>Sign in</Link>
+        </p>
+        <div style={{textAlign:'center',marginTop:'1.25rem',paddingTop:'1.25rem',borderTop:'1px solid #F3F4F6'}}>
+          <Link href="/" style={{fontSize:12,color:'#9CA3AF',textDecoration:'none'}}>← Back to home</Link>
+        </div>
       </div>
     </div>
   )
