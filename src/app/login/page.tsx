@@ -30,8 +30,8 @@ function LoginInner() {
   }
 
   return (
-    <div className="auth-wrap">
-      <div className="auth-card">
+    <div style={{minHeight:'100vh',background:'#f9fafb',display:'flex',alignItems:'center',justifyContent:'center',padding:'2rem',fontFamily:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'}}>
+      <div style={{width:'100%',maxWidth:440,background:'#fff',borderRadius:20,padding:'2.5rem',boxShadow:'0 4px 32px rgba(0,0,0,0.08)',border:'1px solid #E5E7EB'}}>
         <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:'2rem'}}>
           <Logo />
           <span style={{fontSize:20,fontWeight:800}}>
@@ -42,13 +42,13 @@ function LoginInner() {
         <h1 style={{fontSize:26,fontWeight:800,color:'#111827',marginBottom:6}}>Welcome back</h1>
         <p style={{fontSize:14,color:'#6B7280',marginBottom:'2rem'}}>Sign in to your dashboard</p>
         {error && <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'10px 14px',fontSize:13,color:'#DC2626',marginBottom:'1rem'}}>⚠ {error}</div>}
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'1.25rem'}}>
           {[
-            {label:'Email',type:'email',val:email,set:setEmail,ph:'you@company.com'},
+            {label:'Email address',type:'email',val:email,set:setEmail,ph:'you@company.com'},
             {label:'Password',type:'password',val:password,set:setPassword,ph:'••••••••'},
           ].map(f => (
-            <div key={f.label} className="field">
-              <label className="label">{f.label}</label>
+            <div key={f.label}>
+              <label style={{display:'block',fontSize:13,fontWeight:600,color:'#374151',marginBottom:6}}>{f.label}</label>
               <div style={{border:'1.5px solid #E5E7EB',borderRadius:10,background:'#fff'}}>
                 <input type={f.type} placeholder={f.ph} value={f.val} onChange={e=>f.set(e.target.value)} required
                   style={{width:'100%',border:'none',outline:'none',padding:'12px 14px',fontSize:14,color:'#111827',borderRadius:10,background:'transparent',fontFamily:'inherit',boxSizing:'border-box'}}
@@ -63,7 +63,9 @@ function LoginInner() {
             {loading ? '⏳ Signing in…' : 'Sign in →'}
           </button>
         </form>
-        <div className="auth-footer">No account? <Link href="/register">Get started — ₹14,999</Link></div>
+        <p style={{textAlign:'center',fontSize:13,color:'#6B7280',marginTop:'1.5rem'}}>
+          No account? <Link href="/register" style={{color:'#0E7A5A',fontWeight:600,textDecoration:'none'}}>Get started — ₹14,999</Link>
+        </p>
         <div style={{textAlign:'center',marginTop:'1.5rem',paddingTop:'1.5rem',borderTop:'1px solid #F3F4F6'}}>
           <Link href="/" style={{fontSize:12,color:'#9CA3AF',textDecoration:'none'}}>← Back to home</Link>
         </div>
@@ -74,7 +76,7 @@ function LoginInner() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="auth-wrap"><div style={{color:'#0E7A5A'}}>Loading…</div></div>}>
+    <Suspense fallback={<div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#f9fafb'}}><div style={{color:'#0E7A5A'}}>Loading…</div></div>}>
       <LoginInner />
     </Suspense>
   )
